@@ -33,9 +33,15 @@
     color: white;
   }
   .table-td {
-  padding: 8px 4px 8px 4px;
+    padding: 8px 4px 8px 4px;
     border: 2px solid black;
     text-align: center;
     color: #000;
+  }
+}
+
+@media print {
+  .page-break {
+    break-after: page;
   }
 }

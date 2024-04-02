@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import logo from "/logo.png";
 
-
 type RecordTypes = {
   id: number;
-fullName: string,
+  fullName: string;
   fatherName: string;
   phoneNumber: string;
   genderName: string;
@@ -19,16 +18,20 @@ fullName: string,
 
 type EmployeeReportProps = {
   layout: string;
-  page: string;
   width: string;
-  setWidth: (width: string)=> void;
+  setWidth: (width: string) => void;
   dir: string;
 };
 
-export default function EmployeeReport({layout, page, width, setWidth, dir}: EmployeeReportProps) {
+export default function EmployeeReport({
+  layout,
+  width,
+  setWidth,
+  dir,
+}: EmployeeReportProps) {
   const [data, setData] = useState<RecordTypes[]>([]);
   // const [currentPage, setCurrentPage] = useState<number>(1);
-  const [recordsPerPage, setRecordsPerPage] = useState(28)
+  const [recordsPerPage, setRecordsPerPage] = useState(28);
 
   useEffect(() => {
     axios
@@ -45,64 +48,38 @@ export default function EmployeeReport({layout, page, width, setWidth, dir}: Emp
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-      if (layout === "portrait" && page === "A4") {
-        setWidth("w-[210mm]");
-        setRecordsPerPage(26);
-      }
-       else if (layout === "landscape" && page === "A4") {
-          setWidth("w-[297mm]");
-          setRecordsPerPage(18);
-
-       }
-       else if (layout === "portrait" && page === "A3") {
-        setWidth("w-[297mm]");
-        setRecordsPerPage(42);
-
-      }
-      else if (layout === "landscape" && page === "A3") {
-        setWidth("w-[420mm]");
-        setRecordsPerPage(26);
-     }
-     
-     const direction =  dir === "english" ? "ltr" : "rtl";
-       
-    }, [width, layout, recordsPerPage, page, dir]);
+    if (layout === "portrait") {
+      setWidth("w-[210mm]");
+      setRecordsPerPage(23);
+    } else if (layout === "landscape") {
+      setWidth("w-[297mm]");
+      setRecordsPerPage(15);
+    }
+  }, [width, layout, recordsPerPage]);
   if (data.length === 0) {
     return <div>Loading...</div>;
   }
 
   const thStyle =
-    page === "A4"
-      ? page === "A4" && layout === "portrait"
-        ? `table-th text-[8px]`
-        : `table-th text-[10px] font-bold`
-      : page === "A3" && layout === "portrait"
-      ? `table-th text-[10px] font-bold`
-      : `table-th text-[12px] font-bold`;
+    layout === "portrait"
+      ? `table-th text-[8px]`
+      : `table-th text-[10px] font-bold`;
 
   const tdStyle =
-    page === "A4"
-      ? page === "A4" && layout === "portrait"
-        ? `table-td text-[8px]`
-        : `table-td text-[9px] font-bold`
-      : page === "A3" && layout === "portrait"
-      ? `table-td text-[9px] font-bold`
-      : `table-td text-[10px] font-bold`;
-
+    layout === "portrait"
+      ? `table-td text-[8px]`
+      : `table-td text-[9px] font-bold`;
 
   const totalPages = Math.ceil(data.length / recordsPerPage);
-
-
-
 
   return (
     <div className={`${width} mx-auto px-5`} dir={dir}>
       {/* here this is sprateing the pages into multiple pages and map the data into the pages  */}
       {Array.from({ length: totalPages }).map((_, pageIndex) => (
         // this is the page break section starts
-        <div key={pageIndex} className="page-break mb-5 py-2">
+        <div key={pageIndex} className="page-break py-10">
           {/* here is the table header section starts */}
-          <div className="flex justify-between items-center text-black border-[2px] border-black border-b-0 px-2 py-4">
+          <div className="flex justify-between items-center text-black border-[2px] border-black border-b-0 px-2 py-4 bg-white">
             <div className="flex-col justify-center items-center text-center">
               <img
                 src={logo}
