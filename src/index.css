@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Your custom base styles... */
+  .A4-portrait {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    padding: 2mm;
+  }
+  .A4-landscape {
+    width: 297mm;
+    height: 210mm;
+    margin: 0;
+    padding: 2mm;
+  }
+  .table-style {
+    width: 100%;
+    border-collapse: collapse;
+    color: #e1e1e1;
+  }
+  .thead-style {
+    width: 100%;
+    color: gray;
+    background-color: black;
+  }
+  .table-th {
+    padding: 8px 4px 8px 4px;
+    border: 2px solid black;
+    text-align: center;
+    color: white;
+  }
+  .table-td {
+  padding: 8px 4px 8px 4px;
+    border: 2px solid black;
+    text-align: center;
+    color: #000;
+  }
+}
